@@ -42,6 +42,11 @@ function getFileContent(filename, res) {
 }
 
 const server = http.createServer((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     if (req.url === '/') {
         getFileContent('index.html', res);
         return;
@@ -137,7 +142,7 @@ const server = http.createServer((req, res) => {
             }
             return;
         }
-        if (req.method === 'GET') {     
+        if (req.method === 'GET') {
             fs.readFile('./almacen.txt', (err, data) => {
                 if (err) throw err  
                 res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -175,7 +180,7 @@ const server = http.createServer((req, res) => {
     }
 });
 
-port = argv[2] || 3000;
+const port = 2206;
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);

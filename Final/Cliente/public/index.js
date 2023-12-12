@@ -1,20 +1,20 @@
 var nameC;
 var ruc;
 
-function validateForm(){
+function validateForm() {
     var nameC = document.getElementById('name').value;
     var ruc = document.getElementById('ruc').value;
-    if(nameC == ""){
+    if (nameC == "") {
         alert('Ingrese su nombre');
         nameC.focus();
         return false;
     }
 
-    if(ruc == ""){
+    if (ruc == "") {
         alert('Ingrese su ruc');
         ruc.focus();
         return false;
-    } else if(ruc.length < 11 && ruc.length > 0){
+    } else if (ruc.length < 11 && ruc.length > 0) {
         alert('Ingrese un ruc válido de 11 dígitos');
         ruc.focus();
         return false;
@@ -29,34 +29,52 @@ function login() {
     var userDetails = validateForm();
     if (userDetails) {
         window.location.href = 'cart.html?name=' + userDetails.nameC + '&ruc=' + userDetails.ruc;
-
     }
 }
-window.onload = function() {
+window.onload = function () {
     var urlParams = new URLSearchParams(window.location.search);
     var name = urlParams.get('name');
     var ruc = urlParams.get('ruc');
-    console.log(name);
-    console.log(ruc);
     var welcomeMessage = 'Bienvenido ' + name + ' identificado con RUC ' + ruc;
 
     var welcomeElement = document.getElementById('welcomeMessage');
 
     welcomeElement.textContent = welcomeMessage;
 }
-var productos = [
-    { id: 1, nombre: "Producto 1", precio: 10, cantidad: 0 },
-    { id: 2, nombre: "Producto 2", precio: 20, cantidad: 0 },
-    { id: 3, nombre: "Producto 3", precio: 30, cantidad: 0 }
-];
 
+let productos = [];
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Cargar productos desde el archivo de texto o una fuente de datos
-    // Obtener el elemento del cuerpo de la tabla
+document.addEventListener("DOMContentLoaded", async function () {
+    productos = await fetch('http://localhost:2206/almacen', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'text/plain; charset=utf-8'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('La solicitud no fue exitosa');
+            }
+        })
+        .then(data => {
+            let productosArray = data.split('\n');
+            return productosArray;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    productos = productos.map(producto => {
+        const l = producto.split(',');
+        precio = parseInt(l[4]);
+        id = parseInt(l[0]);
+        nombre = l[1];
+        cantidad = 0;
+        return { id, nombre, precio, cantidad };
+    });
     var tbody = document.getElementById("tbody");
 
-    // Generar filas de la tabla con productos
     productos.forEach(function (producto) {
         var row = document.createElement("tr");
         row.innerHTML = `
@@ -91,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.cleanCart = function () {
-    
+
     window.cleanCart = function () {
         productos.forEach(function (producto) {
             var cantidadElement = document.getElementById(`cantidad-${producto.id}`);
@@ -126,9 +144,9 @@ function generarFactura() {
         },
         body: JSON.stringify(venta)
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
