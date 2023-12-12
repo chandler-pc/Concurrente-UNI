@@ -2,6 +2,18 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+const port = 9091;
+
+const otherNodes = [
+    "localhost:9091",
+    "localhost:9092",
+    "localhost:9093"
+]
+
+let raft = {
+    status : 'follower'
+}
+
 function getFileContent(filename, res) {
     let filePath = path.join(__dirname, 'public', filename);
     const extname = path.extname(filePath);
@@ -42,13 +54,47 @@ function getFileContent(filename, res) {
 
 const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
+    if (req.method === 'OPTIONS') {
+        console.log('OPTIONS SUCCESS'); 
+        res.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        });
+        res.end();
+    }
     if (req.url === '/') {
-        getFileContent('index.html', res);
+        if (req.method === 'GET') {   
+            getFileContent('index.html', res);
+            return;
+        }
+        if(req.method === 'HEAD'){
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('ok');
+            return;
+        }
         return;
+    }
+    if(req.url === '/status'){
+        if(req.method === 'GET'){
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(raft.status);
+            return;
+        }
+        if(req.method === 'PUT'){
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            req.on('end', async () => {
+                raft.status = body;
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('ok');
+            });
+            return;
+        }
     }
     if (req.url.startsWith('/public')) {
         const filename = req.url.split('/')[2];
@@ -59,6 +105,8 @@ const server = http.createServer((req, res) => {
         const params = req.url.split('/');
         const id = params[2];
         if (!isNaN(id)) {
+            console.log(req.method);
+            console.log(id);
             if (req.method === 'GET') {
                 fs.readFile('almacen.txt', 'utf8', (err, data) => {
                     if (err) {
@@ -110,6 +158,43 @@ const server = http.createServer((req, res) => {
                         });
                     });
                 });
+            }
+            if(req.method === 'PATCH'){
+                let body = '';
+                console.log('patch');
+                req.on('data', chunk => {
+                    body += chunk.toString();
+                    console.log(body);
+                });
+                req.on('end', async () => {
+                    fs.readFile('almacen.txt', 'utf8', (err, data) => {
+                        if (err) {
+                            res.writeHead(500, { 'Content-Type': 'text/plain' });
+                            res.end('Error al leer el archivo');
+                            return;
+                        }
+                        const lines = data.split('\n');
+                        for (let i = 0; i < lines.length; i++) {
+                            const line = lines[i].split(',');
+                            if (line[0] === id) {
+                                const newQuantity = parseInt(line[2]) + parseInt(body);
+                                lines[i] = `${id},${line[1]},${line[2]},${newQuantity},${line[4]}`;
+                                break;
+                            }
+                        }
+                        const updatedData = lines.join('\n');
+                        fs.writeFile('almacen.txt', updatedData, 'utf8', (err) => {
+                            if (err) {
+                                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                                res.end('Error al actualizar el archivo');
+                                return;
+                            }
+                            res.writeHead(200, { 'Content-Type': 'text/plain' });
+                            res.end(`Producto con id ${id} actualizado`);
+                        });
+                    });
+                });
+                return;
             }
             if (req.method === 'DELETE') {
                 fs.readFile('almacen.txt', 'utf8', (err, data) => {
@@ -178,8 +263,6 @@ const server = http.createServer((req, res) => {
         }
     }
 });
-
-const port = 2206;
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);

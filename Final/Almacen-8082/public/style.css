@@ -1,0 +1,51 @@
+body{
+    background: #92a2c3;
+}
+
+*{
+    color: #463735;
+}
+#Update{
+    background-color: #675470; 
+    color: #fff;
+    border: none;
+    display: none;
+}
+#Submit{
+    background-color: #306F83; 
+    border: none;
+    color: #fff;
+}
+#edit{
+    background-color: #3A755F; 
+    border: none;
+    color: #fff;
+}
+#delete{
+    background-color: #9B2E31; 
+    border: none;
+    color: #fff;
+}
+
+hr{
+    border: 1px solid #fff;
+    width: 100%;
+}
+
+#crudTable {
+    background-color: transparent;
+    color: white;
+}
+  
+#crudTable th, #crudTable td {
+    background-color: transparent; 
+    color: white;
+}
+#crudTable th:nth-child(6) {
+    width: 15%; 
+}
+#crudTable tr{
+    height: 10px;
+}
+
+  

@@ -1,0 +1,100 @@
+1,Camiseta,Tienda de ropa,50,19.99
+2,Pantalón vaquero,Tienda de ropa,30,39.95
+3,Zapatillas deportivas,Tienda de calzado,40,59.99
+4,Lápices de colores,Papelería,100,2.49
+5,Cuaderno espiral grande,Papelería,75,4.99
+6,Teclado inalámbrico,Tecnología,20,30.5
+7,Ratón óptico,Tecnología,50,14.95
+8,Monitor LED 24 pulgadas,Tecnología,10,199.99
+9,Libro "El principito",Librería,60,9.95
+10,Reloj de pared decorativo,Hogar,25,19.99
+11,Juego de sartenes antiadherentes,Hogar,15,49.95
+12,Almohada viscoelástica,Hogar,40,29.99
+13,Botella de vino tinto gourmet,Alimentación,20,34.99
+14,Caja de chocolates surtidos,Alimentación,50,12.95
+15,Paquete de arroz integral,Alimentación,800,3.4
+16,Set de herramientas básicas,Ferretería,10,39.99
+17,Cinta métrica 5 metros,Ferretería,30,7.95
+18,Taladro inalámbrico,Ferretería,5,89.95
+19,Plantas suculentas variadas,Jardinería,35,6.99
+20,Manguera de jardín 20 metros,Jardinería,25,18.95
+21,Pintura acrílica set de 12 colores,Arte y manualidades,20,24.99
+22,Block de papel para acuarela,Arte y manualidades,40,8.95
+23,Kit de costura completo,Arte y manualidades,15,17.99
+24,Cámara instantánea Polaroid,Fotografía,8,79.95
+25,Trípode ajustable para cámara,Fotografía,15,34.99
+26,Disco duro externo 1TB,Tecnología,12,69.99
+27,Auriculares Bluetooth inalámbricos,Tecnología,45,49.95
+28,Lámpara de escritorio LED,Tecnología,30,22.99
+29,Plancha de vapor doméstica,Hogar,20,32.95
+30,Espejo de maquillaje con luces,Hogar,18,27.99
+31,Paquete de pilas AA (12 unidades),Electrónica,50,9.95
+32,Cable USB-C a USB-A 2.0 1 metro,Electrónica,40,6.99
+33,Funda protectora para iPhone 12,Electrónica,25,14.95
+34,Juego de toallas de baño (4 piezas),Hogar,28,19.99
+35,Colchón ortopédico individual,Hogar,5,149.95
+36,Bolsa de croquetas para perro,Animales domésticos,15,22.49
+37,Juguete para gato con plumas,Animales domésticos,20,7.99
+38,Acuario completo con accesorios,Mascotas,10,89.95
+39,Correa retráctil para perro,Mascotas,30,16.99
+40,Fertilizante para plantas de interior,Jardinería,45,5.95
+41,Kit de herramientas de jardinería,Jardinería,22,27.99
+42,Smartphone Android de gama media,Tecnología,18,279.99
+43,Teclado mecánico para gaming,Tecnología,25,89.95
+44,Ratón inalámbrico para gaming,Tecnología,30,49.99
+45,Silla ergonómica de oficina,Hogar,15,129.95
+46,Escritorio de madera para ordenador,Hogar,10,79.99
+47,Lámpara de pie moderna,Hogar,20,44.95
+48,Cafetera de cápsulas individual,Electrodomésticos,30,69.99
+49,Batidora de mano 800W,Electrodomésticos,18,34.95
+50,Horno eléctrico convección 30L,Electrodomésticos,8,129.99
+51,Tablet Android 10 pulgadas,Tecnología,20,149.95
+52,Altavoz Bluetooth resistente al agua,Tecnología,25,29.99
+53,Cargador portátil 20000mAh,Tecnología,35,24.95
+54,Sartén de hierro fundido 12 pulgadas,Cocina,12,39.99
+55,Cuchillo de chef profesional,Cocina,30,29.95
+56,Set de copas de vino tinto (6 unidades),Cocina,20,19.99
+57,Toalla de playa grande 100% algodón,Hogar,40,11.95
+58,Paraguas automático resistente al viento,Hogar,25,17.99
+59,Alfombra antideslizante para baño,Hogar,35,9.95
+60,Set de brochas de maquillaje profesional,Belleza,15,24.99
+61,Lápiz labial mate larga duración,Belleza,50,8.95
+62,Mascarilla facial hidratante (pack de 5),Belleza,30,12.99
+63,Impresora multifunción inalámbrica,Oficina,10,89.95
+64,Papel de impresión A4 (500 hojas),Oficina,40,4.99
+65,Archivador de documentos con cierre,Oficina,20,12.95
+66,Cámara de seguridad WiFi interior,Hogar,15,19.99
+67,Sistema de luces inteligentes para casa,Hogar,28,59.95
+68,Termostato inteligente para calefacción,Hogar,10,129.99
+69,Robot aspirador con mapeo láser,Hogar,5,279.95
+70,Kit de herramientas para reparación de móviles,Tecnología,20,19.99
+71,Funda resistente para MacBook Air 13",Tecnología,25,29.95
+72,Soporte ajustable para tablet o iPad,Tecnología,30,14.99
+73,Lápiz óptico para tablet o smartphone,Tecnología,40,9.95
+74,Mochila antirrobo con puerto USB,Mochilas,20,29.99
+75,Maleta de viaje grande con ruedas,Maletas,12,79.95
+76,Portadocumentos de cuero genuino,Accesorios,18,34.99
+77,Gafas de sol polarizadas con estuche,Gafas,25,24.95
+78,Bufanda de lana unisex,Moda,30,14.99
+79,Guantes térmicos impermeables,Moda,20,19.95
+80,Bolsa de gimnasio con compartimento zapatos,Deporte,15,29.99
+81,Camiseta deportiva transpirable,Deporte,35,12.95
+82,Zapatillas running ultraligeras,Deporte,40,54.99
+83,Bicicleta estática plegable,Deporte,8,179.95
+84,Pelota de yoga anti-explosión 65cm,Deporte,25,22.99
+85,Set de pesas ajustables 20kg,Deporte,10,49.95
+86,Casco de ciclismo con luz LED,Deporte,18,39.99
+87,Tabla de surf principiante 7 pies,Deporte,5,249.95
+88,Raqueta de tenis profesional,Raquetas,15,129.99
+89,Pelotas de tenis (pack de 4),Raquetas,50,7.95
+90,Red de tenis portátil,Raquetas,10,49.99
+91,Colchoneta de camping doble,Exterior,20,39.95
+92,Tienda de campaña para 4 personas,Exterior,8,89.99
+93,Linterna recargable resistente al agua,Exterior,25,18.95
+94,Mochila de senderismo 40L,Exterior,30,49.95
+95,Termo de acero inoxidable 1L,Camping,20,14.99
+96,Kit de utensilios cocina camping,Camping,18,27.95
+97,Cuchillo multiusos plegable,Camping,40,9.99
+98,Botiquín de primeros auxilios,Cuidado personal,15,19.95
+99,Crema solar SPF 50+ resistente al agua,Cuidado personal,40,8.99
+100,Set de cepillos dentales ecológicos,Cuidado personal,50,12.95

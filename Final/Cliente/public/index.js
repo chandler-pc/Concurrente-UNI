@@ -45,7 +45,8 @@ window.onload = function () {
 let productos = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
-    productos = await fetch('http://localhost:2206/almacen', {
+    const port = await fetch('http://localhost:9090/').then(response => response.json()).then(data => data.puerto_lider);
+    productos = await fetch(`http://localhost:${port}/almacen`, {
         method: 'GET',
         headers: {
             'Content-Type': 'text/plain; charset=utf-8'
@@ -89,14 +90,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         tbody.appendChild(row);
     });
 
-    // Función para sumar la cantidad de un producto
     window.sumarCantidad = function (id) {
         var cantidadElement = document.getElementById(`cantidad-${id}`);
         productos.find(producto => producto.id === id).cantidad++;
         cantidadElement.textContent = productos.find(producto => producto.id === id).cantidad;
     };
 
-    // Función para restar la cantidad de un producto
     window.restarCantidad = function (id) {
         var cantidadElement = document.getElementById(`cantidad-${id}`);
         var producto = productos.find(producto => producto.id === id);
@@ -133,9 +132,29 @@ function obtenerDatosDeVenta() {
     };
 }
 
-function generarFactura() {
+async function generarFactura() {
     var venta = obtenerDatosDeVenta();
-
+    const port = await fetch('http://localhost:9090/').then(response => response.json()).then(data => data.puerto_lider);
+    const prods = venta.productos.map(producto => {
+        return {
+            id: producto.id,
+            cantidad: producto.cantidad
+        }
+    });
+    for(let i = 0; i < prods.length; i++){
+        const res = await fetch(`http://localhost:${port}/almacen/${prods[i].id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'text/plain; charset=utf-8',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: -prods[i].cantidad
+        });
+        if(res.status !== 200){
+            alert('No hay suficiente stock');
+            return;
+        }
+    }
     fetch('http://localhost:8080/ventas', {
         method: 'POST',
         headers: {
