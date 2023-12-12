@@ -102,3 +102,33 @@ window.cleanCart = function () {
         });
     };
 };
+
+function obtenerDatosDeVenta() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var nameC = urlParams.get('name');
+    var ruc = urlParams.get('ruc');
+    var productosSeleccionados = productos.filter(producto => producto.cantidad > 0);
+
+    return {
+        nameC: nameC,
+        ruc: ruc,
+        productos: productosSeleccionados
+    };
+}
+
+function generarFactura() {
+    var venta = obtenerDatosDeVenta();
+
+    fetch('http://localhost:8080/ventas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(venta)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}

@@ -1,0 +1,1 @@
+{"1": {"id": 1, "datos": {"nameC": "76481309", "ruc": "12345678910", "productos": [{"id": 1, "nombre": "Producto 1", "precio": 10, "cantidad": 2}, {"id": 2, "nombre": "Producto 2", "precio": 20, "cantidad": 3}, {"id": 3, "nombre": "Producto 3", "precio": 30, "cantidad": 1}]}}}
