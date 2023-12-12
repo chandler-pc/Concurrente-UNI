@@ -59,20 +59,19 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         })
         .then(data => {
-            let productosArray = data.split('\n');
+            let productosArray = data.split('\n').map(producto => {
+                const l = producto.split(',');
+                precio = parseInt(l[4]);
+                id = parseInt(l[0]);
+                nombre = l[1];
+                cantidad = 0;
+                return { id, nombre, precio, cantidad };
+            });
             return productosArray;
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    productos = productos.map(producto => {
-        const l = producto.split(',');
-        precio = parseInt(l[4]);
-        id = parseInt(l[0]);
-        nombre = l[1];
-        cantidad = 0;
-        return { id, nombre, precio, cantidad };
-    });
     var tbody = document.getElementById("tbody");
 
     productos.forEach(function (producto) {
