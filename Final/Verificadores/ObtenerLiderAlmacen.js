@@ -25,10 +25,37 @@ let nodos = [
 
 const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    console.log(req.url);
     if (req.url === '/') {
         res.end(JSON.stringify({ puerto_lider }));
     } else {
+        if (req.url.startsWith('/almacen')) {
+            const id = req.url.split('/')[2];
+            console.log(id);
+            if (req.method === 'PUT') {
+                let body = '';
+                req.on('data', chunk => {
+                    body += chunk.toString();
+                });
+                req.on('end', () => {
+                    for(let i = 0; i < nodos.length; i++){
+                        const nodo = nodos[i];
+                        if(nodo.estado === 'activo' && nodo.ip !== `localhost:${puerto_lider}`){
+                            fetch(`http://${nodo.ip}/almacen/${id}/false`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'text/plain'
+                                },
+                                body: body
+                            });
+                        }
+                    }
+                    res.end('ok');
+                });
+            }
+        }
         res.end('ok');
     }
 });
@@ -57,16 +84,16 @@ const checkNodes = () => {
     });
     return Promise.all(promises);
 }
-const check = async () =>{
+const check = async () => {
     await Promise.all([checkNodes()]);
-    for(let i = 0; i < nodos.length; i++){
+    for (let i = 0; i < nodos.length; i++) {
         const nodo = nodos[i];
-        if(nodo.estado === 'activo'){
+        if (nodo.estado === 'activo') {
             fetch(`http://${nodo.ip}/status`, {
                 method: 'PUT',
                 body: 'lider'
             });
-            puerto_lider =  nodo.ip.split(':')[1];
+            puerto_lider = nodo.ip.split(':')[1];
             break;
         }
     }

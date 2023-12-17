@@ -1,4 +1,0 @@
-ID,Nombre,Precio,Cantidad
-1,Producto 1,10,0
-2,Producto 2,20,0
-3,Producto 3,30,0

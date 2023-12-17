@@ -35,7 +35,7 @@ function validateForm() {
 }
 
 async function showData(){
-    const productList = (await fetch('http://localhost:2206/almacen').then(response => response.text())).split('\n');
+    const productList = (await fetch('http://localhost:9093/almacen').then(response => response.text())).split('\n');
     let html="";
     productList.forEach(function(product){
         product = product.split(',')
@@ -67,7 +67,7 @@ async function AddData(){
         let category = document.getElementById("category").value;   
         let amount = document.getElementById("amount").value;   
         let cost = document.getElementById("cost").value;
-        await fetch('http://localhost:2206/almacen', {
+        await fetch('http://localhost:9093/almacen', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -90,7 +90,7 @@ async function AddData(){
 }
 
 async function deleteProduct(index){
-    await fetch('http://localhost:2206/almacen/' + index, {
+    await fetch('http://localhost:9093/almacen/' + index, {
         method: 'DELETE'
     });
     showData();
@@ -100,7 +100,7 @@ async function updateProduct(index){
     document.getElementById("Submit").style.display = "none";
     document.getElementById("Update").style.display = "block";
 
-    let product = await fetch('http://localhost:2206/almacen/' + index).then(response => response.text());
+    let product = await fetch('http://localhost:9093/almacen/' + index).then(response => response.text());
     product = product.substring(0, product.length - 2);
     product = product.split(',');
     document.getElementById("name").value = product[1];
@@ -110,7 +110,7 @@ async function updateProduct(index){
     window.scrollTo(0, 0);
     document.querySelector("#Update").onclick = async function(){
         if(validateForm() == true){
-            await fetch('http://localhost:2206/almacen/' + index, {
+            await fetch('http://localhost:9093/almacen/' + index + "/true", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'text/plain'

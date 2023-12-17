@@ -145,8 +145,7 @@ async function generarFactura() {
         const res = await fetch(`http://localhost:${port}/almacen/${prods[i].id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'text/plain; charset=utf-8',
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': 'text/plain; charset=utf-8'
             },
             body: -prods[i].cantidad
         });

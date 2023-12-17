@@ -2,17 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const port = 9091;
+let port = 9091;
 
-const otherNodes = [
-    "localhost:9091",
-    "localhost:9092",
-    "localhost:9093"
-]
-
-let raft = {
-    status : 'follower'
-}
+const middle = "http://localhost:9090";
 
 function getFileContent(filename, res) {
     let filePath = path.join(__dirname, 'public', filename);
@@ -55,14 +47,9 @@ function getFileContent(filename, res) {
 const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
     if (req.method === 'OPTIONS') {
-        console.log('OPTIONS SUCCESS'); 
-        res.writeHead(200, {
-            'Content-Type': 'text/plain',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Content-Type'
-        });
+        res.writeHead(200);
         res.end();
     }
     if (req.url === '/') {
@@ -77,25 +64,6 @@ const server = http.createServer((req, res) => {
         }
         return;
     }
-    if(req.url === '/status'){
-        if(req.method === 'GET'){
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end(raft.status);
-            return;
-        }
-        if(req.method === 'PUT'){
-            let body = '';
-            req.on('data', chunk => {
-                body += chunk.toString();
-            });
-            req.on('end', async () => {
-                raft.status = body;
-                res.writeHead(200, { 'Content-Type': 'text/plain' });
-                res.end('ok');
-            });
-            return;
-        }
-    }
     if (req.url.startsWith('/public')) {
         const filename = req.url.split('/')[2];
         getFileContent(filename, res);
@@ -104,9 +72,8 @@ const server = http.createServer((req, res) => {
     if (req.url.startsWith('/almacen')) {
         const params = req.url.split('/');
         const id = params[2];
+        const replicate = params[3];
         if (!isNaN(id)) {
-            console.log(req.method);
-            console.log(id);
             if (req.method === 'GET') {
                 fs.readFile('almacen.txt', 'utf8', (err, data) => {
                     if (err) {
@@ -131,6 +98,12 @@ const server = http.createServer((req, res) => {
                     body += chunk.toString();
                 });
                 req.on('end', async () => {
+                    if(replicate === 'true'){
+                        fetch(`${middle}/almacen/${id}`, {
+                            method: 'PUT',
+                            body
+                        });
+                    }
                     fs.readFile('almacen.txt', 'utf8', (err, data) => {
                         if (err) {
                           res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -177,7 +150,7 @@ const server = http.createServer((req, res) => {
                         for (let i = 0; i < lines.length; i++) {
                             const line = lines[i].split(',');
                             if (line[0] === id) {
-                                const newQuantity = parseInt(line[2]) + parseInt(body);
+                                const newQuantity = parseInt(line[3]) + parseInt(body);
                                 lines[i] = `${id},${line[1]},${line[2]},${newQuantity},${line[4]}`;
                                 break;
                             }
@@ -263,6 +236,8 @@ const server = http.createServer((req, res) => {
         }
     }
 });
+
+port = process.argv[2] || port;
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);

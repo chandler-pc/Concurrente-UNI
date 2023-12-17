@@ -1,8 +1,8 @@
-1,Camiseta,Tienda de ropa,50,19.99
-2,Pantalón vaquero,Tienda de ropa,30,39.95
-3,Zapatillas deportivas,Tienda de calzado,40,59.99
-4,Lápices de colores,Papelería,100,2.49
-5,Cuaderno espiral grande,Papelería,75,4.99
+1,Camiseta,Tienda de ropa,27,34
+2,Pantalón vaquero,Tienda de ropa,28,45
+3,Zapatillas deportivas,Tienda de calzado,38,59.99
+4,Lápices de colores,Papelería,100,15
+5,Cuaderno espiral grande,Papelería,71,5
 6,Teclado inalámbrico,Tecnología,20,30.5
 7,Ratón óptico,Tecnología,50,14.95
 8,Monitor LED 24 pulgadas,Tecnología,10,199.99

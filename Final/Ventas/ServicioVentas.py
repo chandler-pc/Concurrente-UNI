@@ -20,7 +20,7 @@ def escribir_ventas(ventas):
 
 def get_file_content(file_path):
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             return file.read(), 200
     except FileNotFoundError:
         return "Archivo no encontrado", 404
@@ -29,6 +29,17 @@ def get_file_content(file_path):
 
 class Servidor(BaseHTTPRequestHandler):
     def do_GET(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        if self.path == "/":
+            content, status = get_file_content(os.path.join(os.path.dirname(__file__), f'public\\index.html'))
+            self.send_response(status)
+            self.end_headers()
+            self.wfile.write(bytes(content, 'utf-8'))
+        if self.path.startswith("/public"):
+            content, status = get_file_content(os.path.join(os.path.dirname(__file__), self.path[1:]))
+            self.send_response(status)
+            self.end_headers()
+            self.wfile.write(bytes(content, 'utf-8'))
         if self.path.startswith("/ventas"):
             ventas = leer_ventas()
             self.send_response(200)
@@ -36,6 +47,7 @@ class Servidor(BaseHTTPRequestHandler):
             self.wfile.write(bytes(json.dumps(ventas), 'utf-8'))
 
     def do_POST(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
         if self.path.startswith("/ventas"):
             length = int(self.headers.get('content-length'))
             field_data = self.rfile.read(length)
